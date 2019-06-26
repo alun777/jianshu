@@ -19,6 +19,18 @@ import {
 } from './style';
 
 class Header extends Component {
+
+  getShowMore() {
+    const newList = this.props.originList.toJS();
+    const pageList = [];
+    for (let i = (this.props.page - 1) * 5; i < this.props.page * 5; i++) {
+      pageList.push(
+        <SearchInfoItem key={Math.random()}>{newList[i]}</SearchInfoItem>
+      )
+    }
+    return pageList
+  }
+
   render() {
     return (
       <HeaderWrapper>
@@ -43,19 +55,20 @@ class Header extends Component {
               ></NavSearch>
             </CSSTransition>
             <span className={this.props.focused ? 'focused iconfont' : 'iconfont'}>&#xe60e;</span>
-            <SearchInfo className={this.props.focused ? '' : 'focused_display'}>
-              <SearchInfoTitle>
+            <SearchInfo
+              className={this.props.focused || this.props.mouseIn ? '' : 'focused_display'}
+              onMouseEnter={this.props.handleMouseEnter}
+              onMouseLeave={this.props.handleMouseLeave}
+            >
+              <SearchInfoTitle
+              >
                 Current Hot Search
-                <SearchInfoSwitch>
+                <SearchInfoSwitch onClick={()=>(this.props.handlecShowMore(this.props.page, this.props.totalPage))}>
                   Show More
                 </SearchInfoSwitch>
               </SearchInfoTitle>
               <SearchInfoList>
-                {
-                  this.props.list.map((item) => {
-                    return <SearchInfoItem key={item}>{item}</SearchInfoItem>
-                  })
-                }
+                {this.getShowMore()}
               </SearchInfoList>
             </SearchInfo>
           </SearchWrapper>
@@ -69,15 +82,18 @@ class Header extends Component {
         </Addition>
       </HeaderWrapper>
     )
-  };
+  }
 }
-
-
 
 const mapStateToProps = (state) => {
   return {
     focused: state.get('header').get('focused'),
-    list: state.getIn(['header', 'list'])
+    originList: state.getIn(['header', 'originList']),
+    page: state.getIn(['header', 'page']),
+    mouseIn: state.getIn(['header', 'mouseIn']),
+    showMoreList: state.getIn(['header', 'showMoreList']),
+    totalPage: state.getIn(['header', 'totalPage']),
+
   }
 }
 
@@ -89,6 +105,20 @@ const mapDispathToProps = (dispatch) => {
     },
     handleInputBlur() {
       dispatch(actionCreators.searchBlur());
+    },
+    handleMouseEnter() {
+      dispatch(actionCreators.changeMouseIn());
+    },
+    handleMouseLeave() {
+      dispatch(actionCreators.changeMouseLeave());
+    },
+    handlecShowMore(page, totalPage) {
+      if (page < totalPage) {
+        dispatch(actionCreators.showMore(page + 1));
+      }else{
+        dispatch(actionCreators.showMore(1));
+      }
+      console.log(page)
     }
   }
 }

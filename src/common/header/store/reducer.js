@@ -3,7 +3,11 @@ import { fromJS } from 'immutable';
 
 const defaultState = fromJS({
   focused: false,
-  list: []
+  originList: [],
+  showMoreList: [],
+  mouseIn: false,
+  page: 1,
+  totalPage: 1
 });
 
 export default (state = defaultState, action) => {
@@ -14,7 +18,17 @@ export default (state = defaultState, action) => {
     return state.set('focused', false)
   }
   if (action.type === actionTypes.CHANGE_LIST) {
-    return state.set('list', action.data);
+    return state.set('originList', action.data).set('showMoreList', action.data).set('totalPage', action.totalPage)
+  }
+  if (action.type === actionTypes.CHANGE_MOUSEIN) {
+    return state.set('mouseIn', true)
+  }
+  if (action.type === actionTypes.CHANGE_MOUSELEAVE) {
+    return state.set('mouseIn', false)
+  }
+  if (action.type === actionTypes.SHOW_MORE) {
+    // console.log(action.page)
+    return state.set('page', action.page)
   }
   return state;
 };
