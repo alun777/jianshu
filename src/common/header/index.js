@@ -50,11 +50,11 @@ class Header extends Component {
             >
               <NavSearch
                 className={this.props.focused ? 'focused' : ''}
-                onFocus={this.props.handleInputFocus}
+                onFocus={() => {this.props.handleInputFocus(this.props.originList)}}
                 onBlur={this.props.handleInputBlur}
               ></NavSearch>
             </CSSTransition>
-            <span className={this.props.focused ? 'focused iconfont' : 'iconfont'}>&#xe60e;</span>
+            <span className={this.props.focused ? 'focused iconfont zoom' : 'iconfont zoom'}>&#xe60e;</span>
             <SearchInfo
               className={this.props.focused || this.props.mouseIn ? '' : 'focused_display'}
               onMouseEnter={this.props.handleMouseEnter}
@@ -63,7 +63,8 @@ class Header extends Component {
               <SearchInfoTitle
               >
                 Current Hot Search
-                <SearchInfoSwitch onClick={()=>(this.props.handlecShowMore(this.props.page, this.props.totalPage))}>
+                <SearchInfoSwitch onClick={()=>(this.props.handlecShowMore(this.props.page, this.props.totalPage, this.spinIcon))}>
+                  <span ref= {(icon) => {this.spinIcon = icon}}className="iconfont spin">&#xe851;</span>
                   Show More
                 </SearchInfoSwitch>
               </SearchInfoTitle>
@@ -75,7 +76,7 @@ class Header extends Component {
         </Nav>
         <Addition>
           <Button className='writting'>
-            <span className="iconfont">&#xe611;</span>
+            <span className="iconfont">&#xe60f;</span>
             Compose
           </Button>
           <Button className='reg'>Sign Up</Button>
@@ -99,8 +100,10 @@ const mapStateToProps = (state) => {
 
 const mapDispathToProps = (dispatch) => {
   return {
-    handleInputFocus() {
-      dispatch(actionCreators.getList());
+    handleInputFocus(originList) {
+      if (originList.size === 0) {
+        dispatch(actionCreators.getList())
+      }
       dispatch(actionCreators.searchFocus());
     },
     handleInputBlur() {
@@ -112,13 +115,21 @@ const mapDispathToProps = (dispatch) => {
     handleMouseLeave() {
       dispatch(actionCreators.changeMouseLeave());
     },
-    handlecShowMore(page, totalPage) {
+    handlecShowMore(page, totalPage, spin) {
+      let originAngle = spin.style.transform.replace(/[^0-9]/ig, '')
+      if (originAngle) {
+        originAngle = parseInt(originAngle, 10);
+      }else {
+        originAngle = 0;
+      }
+      spin.style.transform = 'rotate('+(originAngle+360)+'deg)';
+    
+
       if (page < totalPage) {
         dispatch(actionCreators.showMore(page + 1));
       }else{
         dispatch(actionCreators.showMore(1));
       }
-      console.log(page)
     }
   }
 }

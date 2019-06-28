@@ -4,6 +4,9 @@ import Header from './common/header';
 import { IconFont } from './statics/iconfont/icon-font.js';
 import store from './store';
 import { Provider } from 'react-redux';
+import { BrowserRouter, Route } from 'react-router-dom';
+import Home from './pages/home';
+import detail from './pages/detail';
 
 
 class App extends Component {
@@ -13,9 +16,16 @@ class App extends Component {
         <GlobalStyle />
         <IconFont />
         <Provider store={store}>
-          <Header />
+          <div>
+            <Header />
+            <BrowserRouter>
+              <div>
+                <Route path='/' exact component={Home}></Route>
+                <Route path='/detail' exact component={detail}></Route>
+              </div>
+            </BrowserRouter>
+          </div>
         </ Provider>
-        Hello World
       </div>
     )
   }
