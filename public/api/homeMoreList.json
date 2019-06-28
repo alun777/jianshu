@@ -1,0 +1,30 @@
+{
+  "success" : true,
+  "topicList": [{
+    "id": 3,
+    "title": "HOT NEWS",
+    "imgUrl":"#"
+  }, {
+    "id": 4,
+    "title": "HOT TOPIC",
+    "imgUrl":"#"
+  }],
+  "articleList": [{
+    "id": 3,
+    "title": "忙碌没有价值，去做真正少数但重要的事",
+    "desc": "01 最近自己学到了一个概念，让自己豁然开朗。 为什么我过去尝试很多兴趣或习惯都无法坚持下去，例如吉他、Python、早起等等。 原因很简单，因...",
+    "imgUrl": ""
+  }, {
+    "id": 4,
+    "title": "忙碌没有价值，去做真正少数但重要的事",
+    "desc": "01 最近自己学到了一个概念，让自己豁然开朗。 为什么我过去尝试很多兴趣或习惯都无法坚持下去，例如吉他、Python、早起等等。 原因很简单，因...",
+    "imgUrl": ""
+  }],
+  "recommendList": [{
+    "id": 3,
+    "imgUrl": "/img/recommend1.png" 
+  },{
+    "id": 4,
+    "imgUrl": "/img/recommend2.png"
+  }]
+}

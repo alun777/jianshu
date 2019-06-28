@@ -3,7 +3,8 @@ import { fromJS } from 'immutable';
 const defaultState = fromJS({
   topicList: [],
   articleList: [],
-  recommendList: []
+  recommendList: [],
+  articlePage: 1
 });
 
 export default (state = defaultState, action) => {
@@ -14,6 +15,12 @@ export default (state = defaultState, action) => {
         articleList: fromJS(action.articleList),
         recommendList: fromJS(action.recommendList)
       })
+    case 'add_home_data':
+      return state.merge({
+        'articleList': state.get('articleList').concat(action.articleList),
+        'articlePage': action.nextPage
+      })
+     
     default:
       return state;
   }
