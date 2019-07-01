@@ -6,7 +6,9 @@ import store from './store';
 import { Provider } from 'react-redux';
 import { BrowserRouter, Route } from 'react-router-dom';
 import Home from './pages/home';
-import detail from './pages/detail';
+import Detail from './pages/detail/loadable.js';
+import Login from './pages/login';
+import Write from './pages/write'
 
 
 class App extends Component {
@@ -17,11 +19,13 @@ class App extends Component {
         <IconFont />
         <Provider store={store}>
           <div>
-            <Header />
             <BrowserRouter>
               <div>
+                <Header />
                 <Route path='/' exact component={Home}></Route>
-                <Route path='/detail' exact component={detail}></Route>
+                <Route path='/login' exact component={Login}></Route>
+                <Route path='/detail/:id' exact component={Detail}></Route>
+                <Route path='/write' exact component={Write}></Route>
               </div>
             </BrowserRouter>
           </div>

@@ -2,6 +2,8 @@ import React, { Component } from 'react';
 import { connect } from 'react-redux';
 import { CSSTransition } from 'react-transition-group';
 import * as actionCreators from './store/actionCreator';
+import * as loginActionCreators from '../../pages/login/store/actionCreators';
+import { Link } from 'react-router-dom';
 import {
   HeaderWrapper,
   Logo,
@@ -34,11 +36,16 @@ class Header extends Component {
   render() {
     return (
       <HeaderWrapper>
-        <Logo href='/' />
+        <Link to='/'>
+          <Logo href='/' />
+        </Link>
         <Nav>
           <NavItem className='left active'>Home</NavItem>
           <NavItem className='left'>Download</NavItem>
-          <NavItem className='right'>Sign In</NavItem>
+          {
+            this.props.login ? <NavItem onClick={this.props.logout} className='right'>Log Out</NavItem> : 
+            <Link to='/login'><NavItem className='right'>Sign In</NavItem></Link>
+          }
           <NavItem className='right'>
             <span className="iconfont">&#xe636;</span>
           </NavItem>
@@ -75,10 +82,12 @@ class Header extends Component {
           </SearchWrapper>
         </Nav>
         <Addition>
-          <Button className='writting'>
-            <span className="iconfont">&#xe60f;</span>
-            Compose
-          </Button>
+          <Link to='/write'>
+            <Button className='writting'>
+              <span className="iconfont">&#xe60f;</span>
+              Compose
+            </Button>
+          </Link>
           <Button className='reg'>Sign Up</Button>
         </Addition>
       </HeaderWrapper>
@@ -94,6 +103,7 @@ const mapStateToProps = (state) => {
     mouseIn: state.getIn(['header', 'mouseIn']),
     showMoreList: state.getIn(['header', 'showMoreList']),
     totalPage: state.getIn(['header', 'totalPage']),
+    login: state.getIn(['login', 'login'])
 
   }
 }
@@ -130,6 +140,9 @@ const mapDispathToProps = (dispatch) => {
       }else{
         dispatch(actionCreators.showMore(1));
       }
+    },
+    logout() {
+      dispatch(loginActionCreators.log_out())
     }
   }
 }

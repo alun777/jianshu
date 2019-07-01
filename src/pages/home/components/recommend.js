@@ -1,4 +1,4 @@
-import React, { Component } from 'react';
+import React, { PureComponent } from 'react';
 import { connect } from 'react-redux';
 import { 
   RecommendWrapper,
@@ -6,7 +6,7 @@ import {
 } from '../style'; 
 
 
-class Recommend extends Component {
+class Recommend extends PureComponent {
   render() {
     return (
       <RecommendWrapper>
