@@ -22,9 +22,9 @@
   }],
   "recommendList": [{
     "id": 1,
-    "imgUrl": "/img/recommend1.png" 
+    "imgUrl": "img/recommend1.png" 
   },{
     "id": 2,
-    "imgUrl": "/img/recommend2.png"
+    "imgUrl": "img/recommend2.png"
   }]
 }
